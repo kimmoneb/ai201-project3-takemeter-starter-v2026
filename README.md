@@ -42,7 +42,7 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-
+I selected r/solotravel on Reddit because it includes discussions from travelers with different experiences, perspectives, and interests. After reviewing posts about travel planning, safety, accommodation, and personal challenges, I noticed three recurring distinctions. First, some users share firsthand experiences, while others ask general questions or seek advice. Second, some posts provide actionable recommendations, such as budgeting and transportation tips, while others focus on emotional experiences, loneliness, and personal growth. Finally, some travelers provide specific details, including destinations, budgets, and itineraries, while others ask open-ended questions without much context. These observations will help me develop labels that distinguish between different types of travel discussions.
 
 ---
 
