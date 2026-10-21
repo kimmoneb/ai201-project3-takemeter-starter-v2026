@@ -51,61 +51,46 @@ whether you hit them:
 
 ---
 
-## 1.
+## 1. Overall Classification Accuracy
 
-<!-- Your criterion. It must name a number. -->
+The classifier should achieve at least **70% accuracy** on the held-out test set across all three random seeds.
 
-
-
-**Why this target:**
-
-
+**Why this target:** My dataset includes three categories: `advice_seeking`, `personal_experience`, and `practical_guidance`. Since some travel posts contain both personal stories and recommendations, I expect occasional confusion between categories. A 70% accuracy target would demonstrate that the model can identify the primary purpose of a post substantially better than random guessing.
 
 ---
 
-## 2.
+## 2. Per-Label F1 Score
 
-<!-- Your criterion. -->
+Each of the three labels should achieve an **F1-score of at least 0.55** on the held-out test set across all three seeds.
 
-
-
-**Why this target:**
-
-
+**Why this target:** Posts describing personal experiences may overlap with practical guidance, especially when travelers share lessons learned. With only 200 posts and a relatively small test set, scores for less common labels may fluctuate. A minimum F1-score of 0.55 sets a meaningful target while accounting for these challenges.
 
 ---
 
-## 3.
+## 3. Dataset Balance
 
-<!-- Your criterion. -->
+No single label should represent more than **60% of the 200 labeled posts**, and each label should contain at least **40 examples**.
 
-
-
-**Why this target:**
-
-
+**Why this target:** Travel communities contain many personal stories, which could cause `personal_experience` to dominate the dataset. Requiring at least 40 examples per category helps ensure that the classifier has enough examples of advice-seeking and practical guidance posts to learn their differences.
 
 ---
 
-## 4.
+## 4. Labeling Consistency
 
-<!-- Your criterion. -->
+A second review of **20 randomly selected posts** should agree with the original labels on at least **17 out of 20 posts (85%)**, using the documented labeling rules.
 
-
-
-**Why this target:**
-
-
+**Why this target:** Some posts include multiple purposes, such as describing loneliness while recommending social hostels. Reviewing posts again will help determine whether my decision rule consistently distinguishes personal experiences from practical guidance.
 
 ---
 
-## 5.
+## 5. Confidence Reliability
 
-<!-- Your criterion. -->
+Among predictions with a confidence score of **0.75 or higher**, at least **75% should be correctly classified** on the held-out test set across all three seeds.
+
+**Why this target:** The classifier may struggle with posts that combine questions, experiences, and recommendations. When it assigns a high confidence score, I want that prediction to be reasonably trustworthy rather than confidently assigning the wrong category.
 
 
 
-**Why this target:**
 
 
 
