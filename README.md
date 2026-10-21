@@ -58,36 +58,63 @@ Posts about Oslo, Malta, and Italy particularly stood out because the authors di
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `advice_seeking`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** Posts where travelers primarily ask for recommendations, guidance, or help making travel-related decisions.
 
 **Example 1:**
->
+> "Is this itinerary too packed?" — A traveler asks whether their multi-country itinerary is realistic and seeks suggestions for improving it.
+
+Source: https://www.reddit.com/r/solotravel/comments/1l38rup/
 
 **Example 2:**
->
+> "Southeast Asia onward tickets" — A traveler asks about onward-ticket requirements when entering different countries.
+
+Source: https://www.reddit.com/r/solotravel/comments/1b0rv5h/
+
+### `personal_experience`
+
+**Definition:** Posts where travelers primarily share firsthand experiences, emotions, challenges, or personal reflections.
+
+**Example 1:**
+> "First solo trip at 56" — A traveler reflects on completing a five-day solo trip and their expectations of traveling independently.
+
+Source: https://www.reddit.com/r/solotravel/comments/1bad46z/
+
+**Example 2:**
+> "Loneliness while solo travelling" — A traveler describes feeling excluded during a hostel group activity.
+
+Source: https://www.reddit.com/r/solotravel/comments/1n5sb2y/
+
+### `practical_guidance`
+
+**Definition:** Posts where travelers primarily share actionable tips, recommendations, or lessons that others can apply when planning or taking trips.
+
+**Example 1:**
+> "Things I learned from my first solo trip" — A traveler shares packing recommendations and practical travel tips.
+
+Source: https://www.reddit.com/r/solotravel/comments/1l0ebb6/
+
+**Example 2:**
+> "Safety tip from a solo female traveler" — A traveler uses a personal accommodation experience to offer safety advice.
+
+Source: https://www.reddit.com/r/solotravel/comments/1dazyyo/
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** `personal_experience` and `practical_guidance`
 
 **The decision rule I used every time:**
-<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
-     if the tone is heated." -->
 
+If a post primarily describes what happened during a trip or how the traveler felt, I label it `personal_experience`, even if it briefly mentions a recommendation. If the main purpose is to provide actionable advice, specific suggestions, or lessons other travelers can apply, I label it `practical_guidance`, even when the advice comes from a personal experience.
 
+**AI Boundary Test:**
 
+I tested my decision rule using a hypothetical post about a traveler who experienced loneliness during their first solo trip and recommended staying in social hostels. I initially classified it as `personal_experience` because the main focus was the traveler's emotions and firsthand experience.
+
+The AI agreed with my classification but pointed out that the recommendation could also fit `practical_guidance`. This helped me confirm that the primary purpose of the post should determine its label rather than the presence of individual pieces of advice.
+
+**Final Decision:** I kept `personal_experience` because the post primarily describes an emotional experience, while the recommendation is secondary.
 ---
 
 ## The Dataset
