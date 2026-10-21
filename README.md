@@ -42,7 +42,11 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-I selected r/solotravel on Reddit because it includes discussions from travelers with different experiences, perspectives, and interests. After reviewing posts about travel planning, safety, accommodation, and personal challenges, I noticed three recurring distinctions. First, some users share firsthand experiences, while others ask general questions or seek advice. Second, some posts provide actionable recommendations, such as budgeting and transportation tips, while others focus on emotional experiences, loneliness, and personal growth. Finally, some travelers provide specific details, including destinations, budgets, and itineraries, while others ask open-ended questions without much context. These observations will help me develop labels that distinguish between different types of travel discussions.
+For this project, I explored discussions from r/solotravel and r/travel on Reddit. I selected these communities because they include different perspectives on travel, ranging from destination reviews and trip planning to safety concerns, loneliness, and personal growth.
+
+While reviewing the posts, I noticed three recurring distinctions. First, some travelers share firsthand experiences, while others ask questions or seek recommendations. Second, some posts provide practical advice about transportation, budgeting, accommodation, and itineraries, while others focus on personal opinions or emotional experiences. Finally, some users support their perspectives with specific examples, including destinations, costs, and challenges, while others provide limited context.
+
+Posts about Oslo, Malta, and Italy particularly stood out because the authors discussed both positive and negative aspects of their trips while providing useful details. These observations helped me identify potential categories for classifying travel discussions based on their primary purpose and the type of information shared.
 
 ---
 
