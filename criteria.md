@@ -73,6 +73,7 @@ No single label should represent more than **60% of the 200 labeled posts**, and
 
 **Why this target:** Travel communities contain many personal stories, which could cause `personal_experience` to dominate the dataset. Requiring at least 40 examples per category helps ensure that the classifier has enough examples of advice-seeking and practical guidance posts to learn their differences.
 
+**Dataset observation:** After collecting and labeling the posts, I found that `advice_seeking` was the dominant category at 67%, while `practical_guidance` represented only 4.5%. This imbalance may affect the classifier's ability to distinguish less-represented categories, particularly across different training seeds.
 ---
 
 ## 4. Labeling Consistency

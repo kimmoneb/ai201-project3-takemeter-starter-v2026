@@ -123,45 +123,45 @@ The AI agreed with my classification but pointed out that the recommendation cou
      cases. -->
 
 **Where the posts came from:**
+I collected 200 real Reddit posts from r/solotravel and r/travel. The first 29 posts were collected manually, while the remaining 171 were sourced from the Arctic Shift Reddit archive.
 
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
+I manually labeled the first 29 posts using my label taxonomy. For the remaining 171 posts, I used Claude to suggest labels and short explanations, then selected and approved the posts for my dataset. I also checked for duplicates, missing text, and label imbalance.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+|  advice_seeking| 134 | 67% |
+|  personal_experience| 57 | 28.5% |
+|  practical_guidance|  9| 4.5% |
+| **Total** | 200  | 100% |
 
 **Three hard cases**
 
 <!-- Any post that made you pause: what it was, which two labels it could have
      been, and what you chose. These are worth more than the easy 190. -->
 
-**1.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
 
-**2.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
 
-**3.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+**1. My Comprehensive Montenegro Visit Guide**
 
+- **The post:** A traveler describes a 10-day trip to Montenegro, sharing transportation costs, beach recommendations, and travel warnings.
+- **Could have been:** `personal_experience` or `practical_guidance`.
+- **I chose, because:** I chose `practical_guidance` because although the author shares firsthand experiences, the post primarily provides actionable recommendations that other travelers can use when planning their trips.
+
+**2. CDG Airport Naivety**
+
+- **The post:** A traveler shares an experience navigating long airport queues in Paris and nearly missing a connecting train.
+- **Could have been:** `personal_experience` or `practical_guidance`.
+- **I chose, because:** I chose `personal_experience` because the post focuses on the traveler's frustration, challenges, and personal experience. Although the author recommends allowing additional time for connections, the advice is secondary to the story.
+
+**3. Fatigue After Only One Week**
+
+- **The post:** A traveler describes experiencing exhaustion and anxiety shortly after beginning a long trip and questions whether they should change their approach.
+- **Could have been:** `advice_seeking` or `personal_experience`.
+- **I chose, because:** I chose `advice_seeking` because the traveler uses their personal experience to explain their situation but ultimately seeks guidance on what to do next. The main purpose is asking for advice rather than simply reflecting on the experience.
 ---
 
 ## The Training Run
@@ -191,20 +191,26 @@ of next unit's variance. -->
      workflow and disclosing it costs you nothing. Not disclosing it is the
      problem. -->
 
-**Moment 1**
+### Moment 1
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- **What I asked for:** I used Claude Code to help develop a Python script to collect and organize real Reddit travel posts for my dataset.
+- **What came back:** Claude generated scripts to retrieve Reddit posts from the Arctic Shift archive, filter unsuitable entries, and check for duplicates.
+- **What I changed:** I adjusted my approach when Reddit API credentials became a challenge, switching to a publicly available archive while preserving my original manually labeled posts.
 
-**Moment 2**
+### Moment 2
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- **What I asked for:** I asked Claude to help classify additional Reddit posts using my three label definitions and decision rules.
+- **What came back:** Claude suggested labels and explanations. However, the initial selection contained too many `advice_seeking` posts, exceeding the assignment's 70% limit.
+- **What I changed:** I expanded the candidate pool to include more personal experiences and practical guidance, excluded irrelevant or promotional posts, and selected a more balanced dataset.
 
-**Pre-labelling disclosure:**
+### Pre-labelling disclosure
 
+I manually labeled my first 29 Reddit posts before using AI assistance. Claude suggested labels and explanations for the remaining 171 posts. I used my taxonomy and decision rules to review the selected posts and identify ambiguous cases. The final dataset contains 200 posts, with no duplicates and no label exceeding 70%.
+
+
+I fine-tuned a DistilBERT classifier on 200 labeled Reddit travel posts using three categories: `advice_seeking`, `personal_experience`, and `practical_guidance`. Training used 3 epochs, a learning rate of 2e-5, a batch size of 16, and random seed 42. The dataset was divided into 139 training, 31 validation, and 30 test examples. Training was performed on a CPU.
+
+The model achieved **66.67% test accuracy** and a **macro F1-score of 0.267**. Although it correctly classified all 20 advice-seeking posts, it failed to identify the 9 personal-experience posts and 1 practical-guidance post. Every test prediction was assigned to `advice_seeking`, demonstrating how class imbalance can produce misleading overall accuracy.
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
      Don't fill these in during unit 5.
