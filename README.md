@@ -225,19 +225,19 @@ The model achieved **66.67% test accuracy** and a **macro F1-score of 0.267**. A
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.833 | 0.667 | -0.167 |
+| Macro F1 | 0.870 | 0.267 | -0.603 |
+| F1 — `advice_seeking` | 0.872 | 0.800 | -0.072 |
+| F1 — `personal_experience` | 0.737 | 0.000 | -0.737 |
+| F1 — `practical_guidance` | 1.000 | 0.000 | -1.000 |
 
 **What I predicted before I looked:**
-<!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
-     prediction made afterwards isn't one. -->
+
+I did not record a prediction before viewing my trained model's results, so I cannot claim to have made one beforehand. I initially expected fine-tuning to help the model recognize patterns specific to travel-related discussions.
 
 **What the gap actually means:**
-<!-- If the baseline matched your trained model, your fine-tuning added
-     nothing — and that is a real finding, not a failure. Say it plainly. -->
 
+The baseline outperformed my fine-tuned model, achieving 83.3% accuracy and a macro F1-score of 0.870 compared to 66.7% accuracy and 0.267 macro F1. My trained model classified every test post as `advice_seeking`, failing to recognize the other two categories. This suggests that class imbalance and limited examples may have affected its ability to distinguish between labels. The results show that fine-tuning did not improve performance in this experiment and that a general pretrained model using clear label definitions can perform better on this task.
 
 
 ---
