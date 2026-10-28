@@ -190,7 +190,7 @@ of next unit's variance. -->
      batch and then read and corrected every one, say that. It's an allowed
      workflow and disclosing it costs you nothing. Not disclosing it is the
      problem. -->
-
+I used Claude Code to help develop and run a data collection workflow for my TakeMeter project. My goal was to gather Reddit posts related to solo travel that I could use to build a text classification dataset. With Claude Code's assistance, I collected over 3,000 posts. However, I did not use all the collected data. I reviewed and filtered the posts to remove irrelevant examples and focused on building a dataset of 200 posts across my three categories: advice_seeking, personal_experience, and practical_guidance. This experience showed me that collecting a large amount of data does not necessarily mean the data will be balanced or suitable for training.
 ### Moment 1
 
 - **What I asked for:** I used Claude Code to help develop a Python script to collect and organize real Reddit travel posts for my dataset.
@@ -242,36 +242,32 @@ The baseline outperformed my fine-tuned model, achieving 83.3% accuracy and a ma
 
 ---
 
-## Run Log — Before
 
-<!-- Five criteria across three seeds. The notebook's section 6 prints the
-     spread table; the Target and Verdict columns are yours. -->
+## Run Log — Before
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Overall Classification Accuracy | ≥ 70% | 66.7% | 66.7% | 66.7% | MISSED |
+| 2. Per-Label F1 Score | ≥ 0.55 for each label | 0.800 / 0.000 / 0.000* | 0.800 / 0.000 / 0.000* | 0.800 / 0.000 / 0.000* | MISSED |
+| 3. Dataset Balance | No label > 60%; ≥ 40 per label | 67% largest; 9 smallest | Same dataset | Same dataset | MISSED |
+| 4. Labeling Consistency | ≥ 17/20 (85%) | Not measured | Not measured | Not measured | NOT YET TESTED |
+| 5. Confidence Reliability | ≥ 75% accuracy when confidence ≥ 0.75 | Not measured | Not measured | Not measured | NOT YET TESTED |
+
+*Per-label F1 values are shown in this order: `advice_seeking`, `personal_experience`, `practical_guidance`. These values come from the original test evaluation and should be verified against the three-seed results.*|
+
+
 
 ### Confusion matrix
 
-<!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
-     An image of a matrix earns nothing. -->
-
-| true \ predicted |  |  |  |
+| true \ predicted | advice_seeking | personal_experience | practical_guidance |
 |---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| **advice_seeking** | 20 | 0 | 0 |
+| **personal_experience** | 9 | 0 | 0 |
+| **practical_guidance** | 1 | 0 | 0 |
 
 **My biggest off-diagonal number, and what it means:**
-<!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
-     direction. "7 real analysis posts were called hot_take and only 3 went the
-     other way" is a direction, not just an error rate. -->
 
-
+The largest confusion occurred when the model incorrectly classified all 9 `personal_experience` posts as `advice_seeking`, while no `advice_seeking` posts were classified as `personal_experience`. This suggests the model learned to favor the majority category rather than distinguish between posts requesting advice and those primarily sharing experiences. The imbalance in my training dataset may have contributed to this behavior.
 
 ---
 
@@ -280,44 +276,40 @@ The baseline outperformed my fine-tuned model, achieving 83.3% accuracy and a ma
 <!-- MET or MISSED against LAST UNIT's target. The target has to hold across
      all three seeds, not turn up sometimes. -->
 
+|## Verdicts and Diagnoses
+
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Overall classification accuracy | ≥ 70% across all three seeds | **MISSED** | Accuracy was 66.7% for seeds 42, 7, and 2024, falling below my 70% target. |
+| 2 | Per-label F1 score | ≥ 0.55 for every label across all seeds | **MISSED** | `advice_seeking` achieved 0.800, but `personal_experience` and `practical_guidance` both scored 0.000 across all seeds. |
+| 3 | Dataset balance | No label above 60%; at least 40 examples per label | **MISSED** | `advice_seeking` represented 67% of the dataset, while `practical_guidance` had only 9 examples. |
+| 4 | Labeling consistency | ≥ 17/20 (85%) agreement | **NOT YET MEASURED** | I still need to complete the second review of 20 randomly selected posts to determine whether the labels were applied consistently. |
+| 5 | Confidence reliability | ≥ 75% accuracy for predictions with confidence ≥ 0.75 | **NOT YET MEASURED** | My current results do not report accuracy specifically for predictions with confidence scores of at least 0.75. |
 
 **Diagnoses**
 
-<!-- For each miss: the cause, and how you know. The four common causes are:
-     too few examples for a label, a boundary you applied inconsistently, a
-     genuinely hard label pair, and a task the model can't reach from this
-     much data.
+**Criterion 1 — Overall accuracy:** The model consistently achieved 66.7% accuracy across all three seeds, but this result is misleading because it predicted `advice_seeking` for every test post. The model appears to have learned the majority-class pattern rather than the distinctions between the three categories.
 
-     ⚠️ Use your agreement report as evidence. It is the only instrument you
-     have that can tell a LABELLING problem from a MODEL problem, and this
-     section is graded on whether you used it that way. -->
+**Criterion 2 — Per-label F1:** The confusion matrix shows that all 9 `personal_experience` posts and the single `practical_guidance` post were incorrectly classified as `advice_seeking`. This suggests that the model struggled to distinguish posts sharing experiences or recommendations from posts requesting advice.
 
+**Criterion 3 — Dataset balance:** My dataset contains 134 `advice_seeking` posts, 57 `personal_experience` posts, and only 9 `practical_guidance` posts. This imbalance likely contributed to the model favoring `advice_seeking`. Increasing representation of the minority categories could help the model learn their differences.
 
+**Criterion 4 — Labeling consistency:** My labels matched all 30 staff labels, resulting in 100% agreement with no disagreements. Although this suggests that I was able to follow the staff's labeling rules, it does not necessarily mean my original dataset is consistent. I still need to review 20 posts from my TakeMeter dataset to determine whether I applied my own labeling rules consistently.
+
+**Criterion 5 — Confidence reliability:** I need to examine predictions with confidence scores of at least 0.75 to determine whether the model's confidence reflects its actual correctness.
 
 ---
 
 ## Agreement Report
 
-<!-- Your rate against the staff set, and every disagreement adjudicated.
+Agreement rate: 30/30 = 100%
 
-     Remember you labelled these 30 under the STAFF taxonomy in
-     data/staff_taxonomy.md, not your own — so every argument below is made
-     from those definitions and those decision rules. -->
+Disagreements: None (0).
 
-**Agreement rate:** ___ / 30 = ___%
 
-<!-- Nobody grades this number. A 60% who argues every disagreement from the
-     stated rules beats a 95% who wrote "staff was right" nine times. Several
-     of the 30 were chosen because they're genuinely ambiguous — you should be
-     winning some of these. -->
+**What the pattern in my disagreements tells me:**
 
+My labels matched all 30 staff labels, resulting in a 100% agreement rate. There were no disagreements to adjudicate. This shows that the labels I submitted were consistent with the staff's taxonomy and decision rules. However, this does not necessarily mean my original TakeMeter dataset is free from labeling inconsistencies, since it uses different categories and definitions.
 **Disagreements**
 
 <!-- Three lines each: the post, both labels, and who you think is right and
@@ -332,6 +324,9 @@ The baseline outperformed my fine-tuned model, achieving 83.3% accuracy and a ma
      Pile (a) is the one that matters most for your diagnosis: if you applied a
      written rule two different ways on 30 posts, that is direct evidence about
      what you did across your own 200. -->
+
+
+There were no disagreements between my labels and the staff labels. All 30 posts matched, so there were no cases that required further review or adjudication under the staff's taxonomy. While this suggests that I understood and applied the staff's decision rules consistently, I recognize that my original TakeMeter dataset uses different categories. Therefore, I cannot assume that the same level of consistency applies to my own dataset without reviewing those labels separately.
 
 **1.**
 > *The post:*
@@ -352,7 +347,7 @@ The baseline outperformed my fine-tuned model, achieving 83.3% accuracy and a ma
 > *Which pile:*
 
 **What the pattern in my disagreements tells me:**
-
+Achieving 100% agreement suggests that I understood and applied the staff's taxonomy and decision rules consistently. Although there were no disagreements to analyze, this exercise helped me recognize the importance of having clear labeling guidelines, especially when posts could fit multiple categories. However, my TakeMeter project uses a different taxonomy, so I would still need to evaluate whether my original 200 posts were labeled consistently.
 
 
 ---
@@ -362,21 +357,28 @@ The baseline outperformed my fine-tuned model, achieving 83.3% accuracy and a ma
 **What I changed:**
 
 **Which diagnosis pointed at it:**
+## The Improvement
+
+**What I changed:** I increased the number of training epochs from 3 to 5 while keeping the dataset, learning rate, and three random seeds unchanged.
+
+**Which diagnosis pointed at it:** My model consistently predicted `advice_seeking` for every test post. I wanted to test whether additional training would help it learn the differences between the three categories.
 
 ### Run Log — After
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| Overall accuracy | ≥ 70% | 66.7% | 66.7% | 66.7% | MISSED |
+| Per-label F1 | ≥ 0.55 for each label | 0.800 / 0.000 / 0.000 | 0.800 / 0.000 / 0.000 | 0.800 / 0.000 / 0.000 | MISSED |
+| Dataset balance | No label above 60%; ≥ 40 per label | Unchanged | Unchanged | Unchanged | MISSED |
+| Labeling consistency | ≥ 17/20 (85%) | Not measured | Not measured | Not measured | NOT YET MEASURED |
+| Confidence reliability | ≥ 75% accuracy when confidence ≥ 0.75 | Not measured | Not measured | Not measured | NOT YET MEASURED |
 
-**Did it help, and how do I know:**
+*Per-label F1 values are ordered: advice_seeking / personal_experience / practical_guidance.*
 
-<!-- If it didn't, say so. Relabelling that didn't help is a genuinely
-     interesting result and earns full credit. -->
+**Did it help, and how do I know?**
+
+Increasing the number of training epochs did not improve my model's performance. Accuracy remained at 66.7%, and macro F1 stayed at 0.267 across all three seeds. The model continued predicting `advice_seeking` for every test post, suggesting that additional training alone was not enough to address the class imbalance or help the model distinguish between categories. This showed me that improving the quality and balance of the training data may be more important than simply training the model longer.
+
 
 
 
@@ -384,13 +386,17 @@ The baseline outperformed my fine-tuned model, achieving 83.3% accuracy and a ma
 
 ## What's Still Broken
 
-<!-- For each criterion still missed: what you'd do, and why you stopped. -->
+## What's Still Broken
 
+My model still falls short of several acceptance criteria. Overall accuracy remained at 66.7%, below my 70% target, and the F1 scores for `personal_experience` and `practical_guidance` remained at 0.000. Increasing training from 3 to 5 epochs did not improve these results. If I continued working on the model, I would focus on collecting more examples of the underrepresented categories and reviewing ambiguous labels rather than increasing training time again.
 
+Dataset balance also remains an issue. Of my original 200 posts, 134 were labeled `advice_seeking`, 57 were `personal_experience`, and only 9 were `practical_guidance`. I would prioritize adding carefully labeled examples of `practical_guidance` and evaluating whether the model can distinguish these posts from advice requests. I stopped after testing one training change because the milestone required one measurable improvement, and collecting and validating additional posts would require more time.
 
-**The gap between what I meant my labels to capture and what the model
-learned:**
-<!-- Two sentences. Your confusion matrix is the evidence. -->
+I also still need to complete the separate 20-post labeling consistency check and calculate accuracy specifically for predictions with confidence scores of at least 0.75. My staff agreement exercise achieved 30/30 agreement, but that does not replace checking consistency within my own travel-post dataset.
+
+**The gap between my labels and what the model learned:**
+
+I designed my labels to distinguish between people asking for advice, sharing personal travel experiences, and providing practical guidance. However, the confusion matrix shows that the model learned to predict `advice_seeking` for every test post rather than recognizing the differences between these categories. This reinforced how important dataset representation and label quality are when training a classifier.
 
 
 
